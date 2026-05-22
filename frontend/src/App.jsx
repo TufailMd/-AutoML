@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { API_BASE, WS_BASE } from './config';
+import { API_BASE, WS_BASE } from '../config';
 
 // SVG Icons
 const Icons = {
@@ -37,7 +37,7 @@ const Icons = {
   )
 };
 
-const BASE_URL = 'http://127.0.0.1:8000';
+const BASE_URL = API_BASE;
 
 function App() {
   const [activeTab, setActiveTab] = useState('landing');
@@ -270,7 +270,7 @@ function App() {
       setActiveExpId(tempId);
 
       // Connect to websocket to stream logs in real-time!
-      const ws = new WebSocket(`ws://127.0.0.1:8000/ws/training/${tempId}`);
+      const ws = new WebSocket(`${WS_BASE}/ws/training/${tempId}`);
       ws.onmessage = (event) => {
         const payload = JSON.parse(event.data);
         setTrainingProgress(payload.progress);
@@ -490,7 +490,7 @@ function App() {
               <div style={{ fontSize: '12px', color: 'hsl(var(--text-muted))', marginTop: '4px' }}>UPTIME SLA</div>
             </div>
             <div>
-              <div style={{ fontSize: '32px', fontWeight: 800 }} onClick={() => setActiveTab('dashboard')} style={{ cursor: 'pointer', color: 'hsl(var(--teal-light))' }}>LAUNCH PLATFORM →</div>
+              <div style={{ fontSize: '32px', fontWeight: 800, cursor: 'pointer', color: 'hsl(var(--teal-light))' }} onClick={() => setActiveTab('dashboard')}>LAUNCH PLATFORM</div>
               <div style={{ fontSize: '12px', color: 'hsl(var(--text-muted))', marginTop: '4px' }}>ENTERPRISE READY</div>
             </div>
           </div>
